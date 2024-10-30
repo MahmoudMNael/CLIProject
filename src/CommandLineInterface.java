@@ -18,7 +18,7 @@ public class CommandLineInterface {
     private String _output;
 
     CommandLineInterface() {
-        _workingDirectory = new File("./src");
+        _workingDirectory = new File("./");
         _commandsRepository = new CommandsRepository();
         _inputStream = new ArrayList<>();
     }
@@ -56,6 +56,11 @@ public class CommandLineInterface {
                     extractCommandHelpers(flags, inputs);
                     _output = _commandsRepository.pwd(_workingDirectory);
                     printOutput();
+                    break;
+                case "rm":
+                    _inputStream.removeFirst();
+                    extractCommandHelpers(flags, inputs);
+                    _commandsRepository.rm(inputs);
                     break;
                 case "exit":
                     exit(0);
