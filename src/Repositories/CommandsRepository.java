@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class CommandsRepository {
     public String pwd(File directory) throws IOException {
+        System.out.println("BlAH");
         return directory.getCanonicalPath();
     }
 }
