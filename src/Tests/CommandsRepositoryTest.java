@@ -1,6 +1,7 @@
 package Tests;
 
 import Repositories.CommandsRepository;
+import org.junit.Assert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +21,20 @@ class CommandsRepositoryTest {
         assertInstanceOf(String.class, _commandRepository.pwd(new File(".")));
     }
 
+    @Test
+    void rm() throws Exception {
+        _commandRepository = new CommandsRepository();
+        File created_file = new File("RemovedFileTest");
+        created_file.createNewFile();
+        ArrayList<String> array = new ArrayList<String>();
+        array.add("RemovedFileTest");
+        _commandRepository.rm(array);
+        boolean checkIfExists = false;
+        if (created_file.exists()){
+            checkIfExists = true;
+        }
+        Assert.assertFalse(checkIfExists);
+      
     @Test
     @DisplayName("cd subfolder one time")
     void cdSubfolder() throws Exception{
