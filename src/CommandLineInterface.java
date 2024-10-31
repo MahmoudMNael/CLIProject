@@ -63,31 +63,46 @@ public class CommandLineInterface {
                     _inputStream.removeFirst();
                     extractCommandHelpers(flags, inputs, isPiped);
                     _output = _commandsRepository.pwd(_workingDirectory);
-                    isPiped = false;
+                    if (isPiped) {
+                        _output = "";
+                        isPiped = false;
+                    }
                     break;
                 case "mkdir":
                     _inputStream.removeFirst();
                     extractCommandHelpers(flags, inputs, isPiped);
                     _commandsRepository.mkdir(_workingDirectory, inputs);
-                    isPiped = false;
+                    if (isPiped) {
+                        _output = "";
+                        isPiped = false;
+                    }
                     break;
                 case "ls":
                     _inputStream.removeFirst();
                     extractCommandHelpers(flags, inputs, isPiped);
                     _output = _commandsRepository.ls(_workingDirectory, flags);
-                    isPiped = false;
+                    if (isPiped) {
+                        _output = "";
+                        isPiped = false;
+                    }
                     break;
                 case "cd":
                     _inputStream.removeFirst();
                     extractCommandHelpers(flags, inputs, isPiped);
                     _workingDirectory = new File(_commandsRepository.cd(_workingDirectory,inputs));
-                    isPiped = false;
+                    if (isPiped) {
+                        _output = "";
+                        isPiped = false;
+                    }
                     break;
                 case "rmdir":
                     _inputStream.removeFirst();
                     extractCommandHelpers(flags, inputs, isPiped);
                     _commandsRepository.rmdir(_workingDirectory, inputs);
-                    isPiped = false;
+                    if (isPiped) {
+                        _output = "";
+                        isPiped = false;
+                    }
                     break;
                 case "|":
                     _inputStream.removeFirst();
