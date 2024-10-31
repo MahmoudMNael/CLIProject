@@ -1,5 +1,4 @@
 import Repositories.CommandsRepository;
-import jdk.jshell.spi.ExecutionControlProvider;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +10,7 @@ import java.util.Scanner;
 import static java.lang.System.exit;
 
 public class CommandLineInterface {
-    static private ArrayList<String> keywords = new ArrayList<>(Arrays.asList("pwd", "cd", "ls", "mkdir", "rmdir", "touch", "mv", "rm", "cat", ">", ">>", "|"));
+    static private ArrayList<String> keywords = new ArrayList<>(Arrays.asList("pwd", "cd", "ls", "mkdir", "rmdir", "touch", "mv", "rm", "cat", "|"));
     private File _workingDirectory;
     private CommandsRepository _commandsRepository;
     private ArrayList<String> _inputStream;
@@ -55,6 +54,17 @@ public class CommandLineInterface {
                     _inputStream.removeFirst();
                     extractCommandHelpers(flags, inputs);
                     _output = _commandsRepository.pwd(_workingDirectory);
+                    printOutput();
+                    break;
+                case "touch":
+                    _inputStream.removeFirst();
+                    extractCommandHelpers(flags, inputs);
+                    _commandsRepository.touch(_workingDirectory, inputs);
+                    break;
+                case "cat":
+                    _inputStream.removeFirst();
+                    extractCommandHelpers(flags, inputs);
+                    _output = _commandsRepository.cat(_workingDirectory, inputs);
                     printOutput();
                     break;
                 case "exit":
