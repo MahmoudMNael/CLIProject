@@ -59,32 +59,34 @@ public class CommandLineInterface {
             ArrayList<String> inputs = new ArrayList<>();
             switch (_inputStream.get(0)) {
                 case "pwd":
-
                     _inputStream.removeFirst();
                     extractCommandHelpers(flags, inputs, isPiped);
                     _output = _commandsRepository.pwd(_workingDirectory);
                     if (isPiped) {
-                        _output = "";
                         isPiped = false;
                     }
                     break;
                 case "touch":
                     _inputStream.removeFirst();
-                    extractCommandHelpers(flags, inputs);
+                    extractCommandHelpers(flags, inputs, isPiped);
                     _commandsRepository.touch(_workingDirectory, inputs);
+                    if (isPiped) {
+                        isPiped = false;
+                    }
                     break;
                 case "cat":
                     _inputStream.removeFirst();
-                    extractCommandHelpers(flags, inputs);
+                    extractCommandHelpers(flags, inputs, isPiped);
                     _output = _commandsRepository.cat(_workingDirectory, inputs);
-                    printOutput();
+                    if (isPiped) {
+                        isPiped = false;
+                    }
                     break;
                 case "mkdir":
                     _inputStream.removeFirst();
                     extractCommandHelpers(flags, inputs, isPiped);
                     _commandsRepository.mkdir(_workingDirectory, inputs);
                     if (isPiped) {
-                        _output = "";
                         isPiped = false;
                     }
                     break;
@@ -93,7 +95,6 @@ public class CommandLineInterface {
                     extractCommandHelpers(flags, inputs, isPiped);
                     _output = _commandsRepository.ls(_workingDirectory, flags);
                     if (isPiped) {
-                        _output = "";
                         isPiped = false;
                     }
                     break;
@@ -102,7 +103,6 @@ public class CommandLineInterface {
                     extractCommandHelpers(flags, inputs, isPiped);
                     _workingDirectory = new File(_commandsRepository.cd(_workingDirectory,inputs));
                     if (isPiped) {
-                        _output = "";
                         isPiped = false;
                     }
                     break;
@@ -111,7 +111,6 @@ public class CommandLineInterface {
                     extractCommandHelpers(flags, inputs, isPiped);
                     _commandsRepository.rmdir(_workingDirectory, inputs);
                     if (isPiped) {
-                        _output = "";
                         isPiped = false;
                     }
                     break;
@@ -120,7 +119,6 @@ public class CommandLineInterface {
                     extractCommandHelpers(flags, inputs, isPiped);
                     _commandsRepository.mv(_workingDirectory, inputs);
                     if (isPiped) {
-                        _output = "";
                         isPiped = false;
                     }
                     break;
@@ -129,7 +127,6 @@ public class CommandLineInterface {
                     extractCommandHelpers(flags, inputs, isPiped);
                     _commandsRepository.rm(_workingDirectory, inputs);
                     if (isPiped) {
-                        _output = "";
                         isPiped = false;
                     }
                     break;

@@ -18,7 +18,13 @@ public class CommandsRepository {
 
     public static void touch(File directory, ArrayList<String> inputs) throws IOException {
         for (String input : inputs) {
-            File file = new File(directory.getCanonicalPath() + "/" + input);
+            File testIfAbs = new File(input);
+            File file;
+            if (testIfAbs.isAbsolute()) {
+                file = new File(input);
+            } else {
+                file = new File(directory.getCanonicalPath() + "/" + input);
+            }
             file.createNewFile();
             file.setLastModified(System.currentTimeMillis());
         }
