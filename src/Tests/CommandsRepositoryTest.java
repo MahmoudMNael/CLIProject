@@ -92,7 +92,7 @@ class CommandsRepositoryTest {
     @DisplayName("rmdir fails when trying to remove dir with subfolders")
     void rmdirFailureDirWithSubFolders() throws Exception {
         _commandRepository = new CommandsRepository();
-        Exception exception = assertThrows(Exception.class, () -> _commandRepository.rmdir(new ArrayList<>(Arrays.asList("FullFolder"))));
+        Exception exception = assertThrows(Exception.class, () -> _commandRepository.rmdir(new File("."), new ArrayList<>(Arrays.asList("FullFolder"))));
         assertEquals("This directory has children so it can not be deleted", exception.getMessage());
     }
 
@@ -100,7 +100,7 @@ class CommandsRepositoryTest {
     @DisplayName("rmdir fails when trying to remove file")
     void rmdirFailureFile() throws Exception {
         _commandRepository = new CommandsRepository();
-        Exception exception = assertThrows(Exception.class, () -> _commandRepository.rmdir(new ArrayList<>(Arrays.asList("README.md"))));
+        Exception exception = assertThrows(Exception.class, () -> _commandRepository.rmdir(new File("."), new ArrayList<>(Arrays.asList("README.md"))));
         assertEquals("It is not directory to be removed", exception.getMessage());
     }
 

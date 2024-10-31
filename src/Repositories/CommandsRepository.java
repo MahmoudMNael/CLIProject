@@ -58,8 +58,14 @@ public class CommandsRepository {
         }
     }
 
-    public void rmdir(ArrayList<String> inputs) throws Exception {
-        File removedFile = new File(inputs.getFirst());
+    public void rmdir(File workingDirectory, ArrayList<String> inputs) throws Exception {
+        File removedFile;
+        File testIfAbs = new File(inputs.getFirst());
+        if (testIfAbs.isAbsolute()) {
+            removedFile = new File(inputs.getFirst());
+        } else {
+            removedFile = new File(workingDirectory.getCanonicalPath() + "/" + inputs.getFirst());
+        }
         if (removedFile.isFile()) {
             throw new Exception("It is not directory to be removed");
         } else if (!removedFile.exists()) {
@@ -68,8 +74,7 @@ public class CommandsRepository {
         // To make sure that it doesnot return null
         if (Objects.requireNonNull(removedFile.list()).length > 0){
             throw new Exception("This directory has children so it can not be deleted");
-        }
-        else {
+        } else {
             removedFile.delete();
         }
     }

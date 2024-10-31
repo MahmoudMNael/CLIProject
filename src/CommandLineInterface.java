@@ -83,20 +83,21 @@ public class CommandLineInterface {
                     _workingDirectory = new File(_commandsRepository.cd(_workingDirectory,inputs));
                     isPiped = false;
                     break;
+                case "rmdir":
+                    _inputStream.removeFirst();
+                    extractCommandHelpers(flags, inputs, isPiped);
+                    _commandsRepository.rmdir(_workingDirectory, inputs);
+                    isPiped = false;
+                    break;
                 case "|":
                     _inputStream.removeFirst();
                     isPiped = true;
-                    break;
-                case "rmdir":
-                    _inputStream.removeFirst();
-                    extractCommandHelpers(flags, inputs);
-                    _commandsRepository.rmdir(inputs);
                     break;
                 case "exit":
                     exit(0);
             }
         }
-        if (isPiped == false) {
+        if (!isPiped) {
             printOutput();
             _output = "";
         }
