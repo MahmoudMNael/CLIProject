@@ -143,7 +143,7 @@ public class CommandsRepository {
             file.delete();
         }
         else {
-            throw new Exception("File can not be deleted.");
+            throw new Exception("rm: File can not be deleted.");
         }
     }
 
@@ -169,7 +169,7 @@ public class CommandsRepository {
         if (directory.exists() && directory.isDirectory()) {
             return directoryName;
         }
-        throw new Exception("Not Valid Path");
+        throw new Exception("cd: No such file or directory!");
     }
 
     public void mkdir(File workingDirectory, ArrayList<String> inputs) throws Exception {
@@ -220,11 +220,11 @@ public class CommandsRepository {
                 }
             }
             else {
-                throw new Exception("File is not found");
+                throw new Exception("mv: No such file or directory!");
             }
         }
         else {
-            throw new Exception("Input is not valid, Please enter the file name and the path you want to move it to");
+            throw new Exception("mv: Missing operand");
         }
     }
   
@@ -237,13 +237,13 @@ public class CommandsRepository {
             removedFile = new File(workingDirectory.getCanonicalPath() + "/" + inputs.getFirst());
         }
         if (removedFile.isFile()) {
-            throw new Exception("It is not directory to be removed");
+            throw new Exception("rmdir: Not a directory!");
         } else if (!removedFile.exists()) {
-            throw new Exception("Directory is not found to be deleted");
+            throw new Exception("rmdir: No such directory!");
         }
         // To make sure that it doesnot return null
         if (Objects.requireNonNull(removedFile.list()).length > 0){
-            throw new Exception("This directory has children so it can not be deleted");
+            throw new Exception("rmdir: Invalid input!");
         } else {
             removedFile.delete();
         }
