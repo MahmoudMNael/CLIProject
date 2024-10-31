@@ -3,7 +3,6 @@ package Tests;
 import Repositories.CommandsRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import java.io.File;
 import java.io.IOException;
@@ -89,6 +88,21 @@ class CommandsRepositoryTest {
     }
 
     @Test
+    @DisplayName("mv fails when given file is not found")
+    void mvFailureNotFound() throws Exception {
+        _commandRepository = new CommandsRepository();
+        Exception exception = assertThrows(Exception.class, () -> _commandRepository.mv(new ArrayList<>(Arrays.asList("MovedFiless","src/MovedFile"))));
+        assertEquals("File or Target path is not found", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("mv fails when the given inputs is not enough")
+    void mvFailureInputInvalid() throws Exception {
+        _commandRepository = new CommandsRepository();
+        Exception exception = assertThrows(Exception.class, () -> _commandRepository.mv(new ArrayList<>(Arrays.asList("MovedFile"))));
+        assertEquals("Input is not valid, Please enter the file name and the path you want to move it to", exception.getMessage());
+    }
+
     @DisplayName("rmdir fails when trying to remove dir with subfolders")
     void rmdirFailureDirWithSubFolders() throws Exception {
         _commandRepository = new CommandsRepository();

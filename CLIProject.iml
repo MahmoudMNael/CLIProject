@@ -87,7 +87,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    
+   
     <orderEntry type="module-library">
       <library name="JUnit5.8.1">
         <CLASSES>
@@ -120,6 +120,5 @@
         <SOURCES />
       </library>
     </orderEntry>
-
   </component>
 </module>

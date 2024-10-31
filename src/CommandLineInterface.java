@@ -25,7 +25,6 @@ public class CommandLineInterface {
     }
 
     public void run() throws IOException, Exception {
-
         while (true) {
             try {
                 System.out.println("\u001B[32m" + System.getProperty("user.name"));
@@ -107,6 +106,11 @@ public class CommandLineInterface {
                 case "|":
                     _inputStream.removeFirst();
                     isPiped = true;
+                    break;
+                case "mv":
+                    _inputStream.removeFirst();
+                    extractCommandHelpers(flags, inputs);
+                    _commandsRepository.mv(inputs);
                     break;
                 case "exit":
                     exit(0);
