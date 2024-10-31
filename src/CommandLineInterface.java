@@ -53,30 +53,39 @@ public class CommandLineInterface {
     }
 
     private void handleInput() throws IOException, Exception {
+        Boolean isPiped = false;
         while (!_inputStream.isEmpty()) {
             ArrayList<String> flags = new ArrayList<>();
             ArrayList<String> inputs = new ArrayList<>();
             switch (_inputStream.get(0)) {
                 case "pwd":
                     _inputStream.removeFirst();
-                    extractCommandHelpers(flags, inputs);
+                    extractCommandHelpers(flags, inputs, isPiped);
                     _output = _commandsRepository.pwd(_workingDirectory);
-                    printOutput();
+                    isPiped = false;
                     break;
                 case "mkdir":
                     _inputStream.removeFirst();
-                    extractCommandHelpers(flags, inputs);
+                    extractCommandHelpers(flags, inputs, isPiped);
                     _commandsRepository.mkdir(_workingDirectory, inputs);
+                    isPiped = false;
                     break;
                 case "ls":
                     _inputStream.removeFirst();
-                    extractCommandHelpers(flags, inputs);
+                    extractCommandHelpers(flags, inputs, isPiped);
                     _output = _commandsRepository.ls(_workingDirectory, flags);
-                    printOutput();
+                    isPiped = false;
+                    break;
+                case "|":
+                    _inputStream.removeFirst();
+                    isPiped = true;
                     break;
                 case "exit":
                     exit(0);
             }
+        }
+        if (isPiped == false) {
+            printOutput();
         }
     }
 
@@ -84,7 +93,7 @@ public class CommandLineInterface {
         System.out.println(_output);
     }
 
-    private void extractCommandHelpers(ArrayList<String> flags, ArrayList<String> inputs) {
+    private void extractCommandHelpers(ArrayList<String> flags, ArrayList<String> inputs, Boolean isPiped) {
         outer:
         while (!_inputStream.isEmpty()) {
             if (_inputStream.get(0).charAt(0) == '-') {
@@ -108,6 +117,12 @@ public class CommandLineInterface {
                 inputs.add(_inputStream.get(0));
                 _inputStream.removeFirst();
             }
+        }
+        if (_output.contains("\n")) {
+            List<String> outputList = Arrays.stream(_output.split("\n")).toList();
+            inputs.addAll(0, outputList);
+        } else {
+            inputs.addFirst(_output);
         }
     }
 }
