@@ -18,16 +18,21 @@ public class CommandLineInterface {
     private String _output;
 
     CommandLineInterface() {
-        _workingDirectory = new File("./src");
+        _workingDirectory = new File(System.getProperty("user.home"));
         _commandsRepository = new CommandsRepository();
         _inputStream = new ArrayList<>();
     }
 
     public void run() throws IOException, Exception {
+
         while (true) {
             try {
-                System.out.println("\u001B[32m" + _workingDirectory.getCanonicalPath());
-                System.out.print("$ " + "\u001B[0m");
+                System.out.println("\u001B[32m" + System.getProperty("user.name"));
+                if (_workingDirectory.getCanonicalPath().equals(System.getProperty("user.home"))) {
+                    System.out.print("\u001B[34m" + "~" + "\u001B[0m" + "$ ");
+                } else {
+                    System.out.print("\u001B[34m" + _workingDirectory.getCanonicalPath() + "\u001B[0m" + "$ ");
+                }
                 getInput();
                 handleInput();
                 System.out.println("");
@@ -62,6 +67,12 @@ public class CommandLineInterface {
                     _inputStream.removeFirst();
                     extractCommandHelpers(flags, inputs);
                     _commandsRepository.mkdir(inputs);
+                    break;
+                case "ls":
+                    _inputStream.removeFirst();
+                    extractCommandHelpers(flags, inputs);
+                    _output = _commandsRepository.ls(_workingDirectory, flags);
+                    printOutput();
                     break;
                 case "exit":
                     exit(0);

@@ -3,6 +3,7 @@ package Repositories;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CommandsRepository {
     public String pwd(File directory) throws IOException {
@@ -22,5 +23,24 @@ public class CommandsRepository {
                 throw new Exception("mkdir: No such file or directory!");
             }
         }
+    }
+
+    public String ls(File workingDirectory, ArrayList<String> flags) throws Exception {
+        ArrayList<String> list = new ArrayList<>(Arrays.asList(workingDirectory.list()));
+        if (flags.contains("-a")) {
+            list.addFirst("..");
+            list.addFirst(".");
+        } else {
+            list.removeIf(val -> (val.charAt(0) == '.'));
+        }
+        if (flags.contains("-r")) {
+            list = new ArrayList(list.reversed());
+        }
+        ArrayList<String> mappedList = new ArrayList<>();
+        for (String path : list) {
+            mappedList.add(path + "/");
+        }
+
+        return String.join("\n", mappedList);
     }
 }
