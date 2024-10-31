@@ -11,7 +11,7 @@ import java.util.Scanner;
 import static java.lang.System.exit;
 
 public class CommandLineInterface {
-    static private ArrayList<String> keywords = new ArrayList<>(Arrays.asList("pwd", "cd", "ls", "mkdir", "rmdir", "touch", "mv", "rm", "cat", ">", ">>", "|"));
+    static private ArrayList<String> keywords = new ArrayList<>(Arrays.asList("pwd", "cd", "ls", "mkdir", "rmdir", "touch", "mv", "rm", "cat", "|"));
     private File _workingDirectory;
     private CommandsRepository _commandsRepository;
     private ArrayList<String> _inputStream;
@@ -32,7 +32,8 @@ public class CommandLineInterface {
                 handleInput();
                 System.out.println("");
             } catch (Exception e) {
-                System.err.println(e.getMessage());
+                System.out.println("\u001B[31m" + e.getMessage() + "\u001B[0m");
+                System.out.println("");
             }
         }
     }
@@ -56,6 +57,11 @@ public class CommandLineInterface {
                     extractCommandHelpers(flags, inputs);
                     _output = _commandsRepository.pwd(_workingDirectory);
                     printOutput();
+                    break;
+                case "mkdir":
+                    _inputStream.removeFirst();
+                    extractCommandHelpers(flags, inputs);
+                    _commandsRepository.mkdir(inputs);
                     break;
                 case "exit":
                     exit(0);
