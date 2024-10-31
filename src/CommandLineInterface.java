@@ -66,7 +66,7 @@ public class CommandLineInterface {
                 case "mkdir":
                     _inputStream.removeFirst();
                     extractCommandHelpers(flags, inputs);
-                    _commandsRepository.mkdir(inputs);
+                    _commandsRepository.mkdir(_workingDirectory, inputs);
                     break;
                 case "ls":
                     _inputStream.removeFirst();
