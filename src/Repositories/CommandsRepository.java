@@ -13,6 +13,7 @@ public class CommandsRepository {
     public String cd (File workingDirectory, ArrayList<String> inputs) throws Exception {
         String directoryName = inputs.getFirst();
         String current_directory = workingDirectory.toString();
+        File testIfAbs = new File(directoryName);
         // Here to make the ./ return back
         if (directoryName.equals("./")) {
             for (int i = current_directory.length() - 1; i >= 0; i-- ) {
@@ -22,8 +23,7 @@ public class CommandsRepository {
                     break;
                 }
             }
-        }
-        else {
+        } else if(!testIfAbs.isAbsolute()){
             // We add the directory to the _workingdirectory
             directoryName = workingDirectory.toString() + "/" + directoryName;
         }
@@ -40,7 +40,13 @@ public class CommandsRepository {
             throw new Exception("mkdir: Missing operand!");
         }
         for (String input : inputs) {
-            File file = new File(workingDirectory.getCanonicalPath() + "/" + input);
+            File testIfAbs = new File(input);
+            File file;
+            if (testIfAbs.isAbsolute()) {
+                file = new File(input);
+            } else {
+                file = new File(workingDirectory.getCanonicalPath() + "/" + input);
+            }
             if (file.exists()) {
                 throw new Exception("mkdir: Directory already exists!");
             }

@@ -21,6 +21,7 @@ public class CommandLineInterface {
         _workingDirectory = new File(System.getProperty("user.home"));
         _commandsRepository = new CommandsRepository();
         _inputStream = new ArrayList<>();
+        _output = "";
     }
 
     public void run() throws IOException, Exception {
@@ -76,14 +77,15 @@ public class CommandLineInterface {
                     _output = _commandsRepository.ls(_workingDirectory, flags);
                     isPiped = false;
                     break;
+                case "cd":
+                    _inputStream.removeFirst();
+                    extractCommandHelpers(flags, inputs, isPiped);
+                    _workingDirectory = new File(_commandsRepository.cd(_workingDirectory,inputs));
+                    isPiped = false;
+                    break;
                 case "|":
                     _inputStream.removeFirst();
                     isPiped = true;
-                    break;
-                case "cd":
-                    _inputStream.removeFirst();
-                    extractCommandHelpers(flags, inputs);
-                    _workingDirectory = new File(_commandsRepository.cd(_workingDirectory,inputs));
                     break;
                 case "exit":
                     exit(0);
@@ -91,10 +93,14 @@ public class CommandLineInterface {
         }
         if (isPiped == false) {
             printOutput();
+            _output = "";
         }
     }
 
     private void printOutput() {
+        if (_output.isEmpty()) {
+            return;
+        }
         System.out.println(_output);
     }
 
