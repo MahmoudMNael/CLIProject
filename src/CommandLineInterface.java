@@ -87,6 +87,11 @@ public class CommandLineInterface {
                     _inputStream.removeFirst();
                     isPiped = true;
                     break;
+                case "rmdir":
+                    _inputStream.removeFirst();
+                    extractCommandHelpers(flags, inputs);
+                    _commandsRepository.rmdir(inputs);
+                    break;
                 case "exit":
                     exit(0);
             }

@@ -3,7 +3,9 @@ package Repositories;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Arrays;
+
 
 public class CommandsRepository {
     public String pwd(File directory) throws IOException {
@@ -56,6 +58,22 @@ public class CommandsRepository {
         }
     }
 
+    public void rmdir(ArrayList<String> inputs) throws Exception {
+        File removedFile = new File(inputs.getFirst());
+        if (removedFile.isFile()) {
+            throw new Exception("It is not directory to be removed");
+        } else if (!removedFile.exists()) {
+            throw new Exception("Directory is not found to be deleted");
+        }
+        // To make sure that it doesnot return null
+        if (Objects.requireNonNull(removedFile.list()).length > 0){
+            throw new Exception("This directory has children so it can not be deleted");
+        }
+        else {
+            removedFile.delete();
+        }
+    }
+        
     public String ls(File workingDirectory, ArrayList<String> flags) throws Exception {
         ArrayList<String> list = new ArrayList<>(Arrays.asList(workingDirectory.list()));
         if (flags.contains("-a")) {
