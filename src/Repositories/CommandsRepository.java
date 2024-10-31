@@ -15,8 +15,14 @@ public class CommandsRepository {
     }
 
 
-    public void rm (ArrayList<String> inputs) throws Exception {
-        File file = new File(inputs.getFirst());
+    public void rm (File workingDirectory, ArrayList<String> inputs) throws Exception {
+        File testIfAbs = new File(inputs.getFirst());
+        File file;
+        if (testIfAbs.isAbsolute()) {
+            file = new File(inputs.getFirst());
+        } else {
+            file = new File(workingDirectory.getCanonicalPath() + "/" + inputs.getFirst());
+        }
         if (file.exists() && file.isFile()) {
             file.delete();
         }

@@ -22,18 +22,20 @@ class CommandsRepositoryTest {
     }
 
     @Test
+    @DisplayName("rm succeeds when given valid input!")
     void rm() throws Exception {
         _commandRepository = new CommandsRepository();
         File created_file = new File("RemovedFileTest");
         created_file.createNewFile();
         ArrayList<String> array = new ArrayList<String>();
         array.add("RemovedFileTest");
-        _commandRepository.rm(array);
+        _commandRepository.rm(new File("."), array);
         boolean checkIfExists = false;
         if (created_file.exists()){
             checkIfExists = true;
         }
-        Assert.assertFalse(checkIfExists);
+        assertFalse(checkIfExists);
+    }
       
     @Test
     @DisplayName("cd subfolder one time")
