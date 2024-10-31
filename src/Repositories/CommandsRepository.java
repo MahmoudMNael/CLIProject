@@ -151,4 +151,21 @@ public class CommandsRepository {
 
         return String.join("\n", mappedList);
     }
+
+    public String getHelpMessage() {
+        String helpMessage = "pwd: It gives you the current directory path you are on \n" +
+                "cd: Makes you change the directory to another one you want \n" +
+                "ls: List all files and directories in the current directory you are in \n" +
+                "ls -a: List all files and directories hidden or not in the current directory \n" +
+                "ls -r: List all files and directories in reversed way in the current directory \n" +
+                "mkdir: Create a new directory \n" +
+                "touch: Create a new file \n" +
+                "rmdir: Remove an existing directory \n" +
+                "rm: Remove an existing file \n" +
+                "cat: Displays content of file \n" +
+                "cat >: Replace content of file \n" +
+                "cat >>: Append content of file \n";
+        return helpMessage;
+    }
+
 }

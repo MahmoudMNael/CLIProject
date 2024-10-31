@@ -54,6 +54,7 @@ public class CommandLineInterface {
 
     private void handleInput() throws IOException, Exception {
         Boolean isPiped = false;
+        outer:
         while (!_inputStream.isEmpty()) {
             ArrayList<String> flags = new ArrayList<>();
             ArrayList<String> inputs = new ArrayList<>();
@@ -125,6 +126,9 @@ public class CommandLineInterface {
                     _inputStream.removeFirst();
                     isPiped = true;
                     break;
+                case "help":
+                    _output = _commandsRepository.getHelpMessage();
+                    break outer;
                 case "exit":
                     exit(0);
             }
