@@ -51,6 +51,7 @@ public class CommandLineInterface {
             ArrayList<String> inputs = new ArrayList<>();
             switch (_inputStream.get(0)) {
                 case "pwd":
+
                     _inputStream.removeFirst();
                     extractCommandHelpers(flags, inputs);
                     _output = _commandsRepository.pwd(_workingDirectory);

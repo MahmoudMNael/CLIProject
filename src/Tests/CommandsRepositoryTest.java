@@ -31,6 +31,7 @@ class CommandsRepositoryTest {
     @Test
     @DisplayName("it succeeds when calling the function")
     void catSuccess() throws IOException, Exception {
+
         _commandRepository = new CommandsRepository();
         assertInstanceOf(String.class, _commandRepository.cat(new File("."), new ArrayList<>(Arrays.asList("file1"))));
     }
@@ -38,6 +39,7 @@ class CommandsRepositoryTest {
     @Test
     @DisplayName("it succeeds when calling the function")
     void catSuccessCreateFile() throws IOException, Exception {
+
         _commandRepository = new CommandsRepository();
         assertDoesNotThrow(() -> _commandRepository.cat(new File("."), new ArrayList<>(Arrays.asList("file1",">","file2" ))));
     }
@@ -45,6 +47,7 @@ class CommandsRepositoryTest {
     @Test
     @DisplayName("it fails when calling the function")
     void catFailure() throws IOException, Exception {
+
         _commandRepository = new CommandsRepository();
         assertThrows(Exception.class, () -> _commandRepository.cat(new File("."), new ArrayList<>(Arrays.asList("file4"))));
     }

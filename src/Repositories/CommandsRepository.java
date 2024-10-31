@@ -72,6 +72,7 @@ public class CommandsRepository {
 
 
             }else{
+
                 // the ">" or ">>" is in the middle of the inputs
                 // case 2: cat file1 > file2 : write the content of file1 to file2
                 // case 2: cat file1 >> file2 : append the content of file1 to file2
