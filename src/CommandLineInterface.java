@@ -80,6 +80,11 @@ public class CommandLineInterface {
                     _inputStream.removeFirst();
                     isPiped = true;
                     break;
+                case "cd":
+                    _inputStream.removeFirst();
+                    extractCommandHelpers(flags, inputs);
+                    _workingDirectory = new File(_commandsRepository.cd(_workingDirectory,inputs));
+                    break;
                 case "exit":
                     exit(0);
             }

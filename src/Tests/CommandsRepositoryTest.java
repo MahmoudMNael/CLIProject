@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CommandsRepositoryTest {
@@ -20,6 +21,43 @@ class CommandsRepositoryTest {
         assertInstanceOf(String.class, _commandRepository.pwd(new File(".")));
     }
 
+    @Test
+    @DisplayName("cd subfolder one time")
+    void cdSubfolder() throws Exception{
+        _commandRepository = new CommandsRepository();
+        ArrayList<String> array = new ArrayList<String>();
+        array.add("src/Tests");
+        File dir = new File("D:\\Programming\\CLIProject");
+        System.out.println(_commandRepository.cd(dir,array));
+        assertEquals("D:\\Programming\\CLIProject/src/Tests", _commandRepository.cd(dir,array));
+    }
+
+    @Test
+    @DisplayName("cd spaced folder")
+    void cdSpacedDirectory() throws Exception{
+        _commandRepository = new CommandsRepository();
+        ArrayList<String> array = new ArrayList<String>();
+        array.add("Space Test");
+        File dir = new File("D:\\Programming\\CLIProject");
+        System.out.println(_commandRepository.cd(dir,array));
+        assertEquals("D:\\Programming\\CLIProject/Space Test", _commandRepository.cd(dir,array));
+    }
+
+    @Test
+    @DisplayName("cd not found")
+    void cdPathNotFound() throws Exception{
+        _commandRepository = new CommandsRepository();
+        ArrayList<String> array = new ArrayList<String>();
+        array.add("abcd");
+        File dir = new File("D:\\Programming\\CLIProject");
+        boolean thrown = false;
+        try {
+            _commandRepository.cd(dir,array);
+        } catch (Exception e) {
+            thrown = true;
+        }
+        assertTrue(thrown);
+    }
     // Test will not succeed twice in a row.
     // You should delete the created directory or run the rmdir test before running it again
     // Or run the whole test class bundle
