@@ -9,27 +9,27 @@ public class CommandsRepository {
         return directory.getCanonicalPath();
     }
 
-    public String cd (File _workingDirectory, ArrayList<String> inputs) throws Exception {
-        String directory_name = inputs.getFirst();
-        String current_directory = _workingDirectory.toString();
+    public String cd (File workingDirectory, ArrayList<String> inputs) throws Exception {
+        String directoryName = inputs.getFirst();
+        String current_directory = workingDirectory.toString();
         // Here to make the ./ return back
-        if (directory_name.equals("./")) {
+        if (directoryName.equals("./")) {
             for (int i = current_directory.length() - 1; i >= 0; i-- ) {
                 if (current_directory.charAt(i) == '\\') {
                     // We make the current_directory the same without the last folder
-                    directory_name = current_directory.substring(0, i);
+                    directoryName = current_directory.substring(0, i);
                     break;
                 }
             }
         }
         else {
             // We add the directory to the _workingdirectory
-            directory_name = _workingDirectory.toString() + "/" + directory_name;
+            directoryName = workingDirectory.toString() + "/" + directoryName;
         }
         // We made a file to see if it exists and isDirectory or not
-        File directory = new File(directory_name);
+        File directory = new File(directoryName);
         if (directory.exists() && directory.isDirectory()) {
-            return directory_name;
+            return directoryName;
         }
         throw new Exception("Not Valid Path");
     }

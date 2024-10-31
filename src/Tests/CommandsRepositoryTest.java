@@ -22,7 +22,7 @@ class CommandsRepositoryTest {
 
     @Test
     @DisplayName("cd subfolder one time")
-    void cd() throws Exception{
+    void cdSubfolder() throws Exception{
         _commandRepository = new CommandsRepository();
         ArrayList<String> array = new ArrayList<String>();
         array.add("src/Tests");
@@ -33,7 +33,7 @@ class CommandsRepositoryTest {
 
     @Test
     @DisplayName("cd spaced folder")
-    void cdSpaced() throws Exception{
+    void cdSpacedDirectory() throws Exception{
         _commandRepository = new CommandsRepository();
         ArrayList<String> array = new ArrayList<String>();
         array.add("Space Test");
@@ -44,7 +44,7 @@ class CommandsRepositoryTest {
 
     @Test
     @DisplayName("cd not found")
-    void cdException() throws Exception{
+    void cdPathNotFound() throws Exception{
         _commandRepository = new CommandsRepository();
         ArrayList<String> array = new ArrayList<String>();
         array.add("abcd");
