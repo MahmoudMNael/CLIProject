@@ -22,6 +22,36 @@ class CommandsRepositoryTest {
     }
 
     @Test
+    @DisplayName("it succeeds when calling the function")
+    void touch() throws IOException {
+        _commandRepository = new CommandsRepository();
+        assertDoesNotThrow(() -> _commandRepository.touch(new File("."), new ArrayList<>(Arrays.asList("file1"))));
+    }
+
+    @Test
+    @DisplayName("it succeeds when calling the function")
+    void catSuccess() throws IOException, Exception {
+
+        _commandRepository = new CommandsRepository();
+        assertInstanceOf(String.class, _commandRepository.cat(new File("."), new ArrayList<>(Arrays.asList("file1"))));
+    }
+
+    @Test
+    @DisplayName("it succeeds when calling the function")
+    void catSuccessCreateFile() throws IOException, Exception {
+
+        _commandRepository = new CommandsRepository();
+        assertDoesNotThrow(() -> _commandRepository.cat(new File("."), new ArrayList<>(Arrays.asList("file1",">","file2" ))));
+    }
+
+    @Test
+    @DisplayName("it fails when calling the function")
+    void catFailure() throws IOException, Exception {
+
+        _commandRepository = new CommandsRepository();
+        assertThrows(Exception.class, () -> _commandRepository.cat(new File("."), new ArrayList<>(Arrays.asList("file4"))));
+    }
+
     @DisplayName("rm succeeds when given valid input!")
     void rm() throws Exception {
         _commandRepository = new CommandsRepository();
@@ -74,6 +104,7 @@ class CommandsRepositoryTest {
         }
         assertTrue(thrown);
     }
+  
     // Test will not succeed twice in a row.
     // You should delete the created directory or run the rmdir test before running it again
     // Or run the whole test class bundle

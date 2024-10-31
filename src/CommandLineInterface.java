@@ -1,5 +1,4 @@
 import Repositories.CommandsRepository;
-import jdk.jshell.spi.ExecutionControlProvider;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,6 +59,7 @@ public class CommandLineInterface {
             ArrayList<String> inputs = new ArrayList<>();
             switch (_inputStream.get(0)) {
                 case "pwd":
+
                     _inputStream.removeFirst();
                     extractCommandHelpers(flags, inputs, isPiped);
                     _output = _commandsRepository.pwd(_workingDirectory);
@@ -67,6 +67,17 @@ public class CommandLineInterface {
                         _output = "";
                         isPiped = false;
                     }
+                    break;
+                case "touch":
+                    _inputStream.removeFirst();
+                    extractCommandHelpers(flags, inputs);
+                    _commandsRepository.touch(_workingDirectory, inputs);
+                    break;
+                case "cat":
+                    _inputStream.removeFirst();
+                    extractCommandHelpers(flags, inputs);
+                    _output = _commandsRepository.cat(_workingDirectory, inputs);
+                    printOutput();
                     break;
                 case "mkdir":
                     _inputStream.removeFirst();
