@@ -26,18 +26,18 @@ public class CommandsRepository {
     }
 
     public void rmdir(ArrayList<String> inputs) throws Exception {
-        File removed_file = new File(inputs.getFirst());
-        if (removed_file.isFile()) {
+        File removedFile = new File(inputs.getFirst());
+        if (removedFile.isFile()) {
             throw new Exception("It is not directory to be removed");
-        } else if (!removed_file.exists()) {
+        } else if (!removedFile.exists()) {
             throw new Exception("Directory is not found to be deleted");
         }
         // To make sure that it doesnot return null
-        if (Objects.requireNonNull(removed_file.list()).length > 0){
+        if (Objects.requireNonNull(removedFile.list()).length > 0){
             throw new Exception("This directory has children so it can not be deleted");
         }
         else {
-            removed_file.delete();
+            removedFile.delete();
         }
     }
 }
