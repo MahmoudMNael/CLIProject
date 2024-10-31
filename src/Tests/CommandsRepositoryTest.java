@@ -67,7 +67,7 @@ class CommandsRepositoryTest {
     @Test
     @DisplayName("ls succeeds when given -r flag")
     void lsSuccessRFlag() throws Exception {
-        assertInstanceOf(String.class, _commandRepository.ls(new File("."), new ArrayList<>(Arrays.asList("-a", "-r"))));
+        assertInstanceOf(String.class, _commandRepository.ls(new File("."), new ArrayList<>(Arrays.asList("-r"))));
     }
 
     @Test
