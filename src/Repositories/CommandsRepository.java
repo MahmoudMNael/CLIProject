@@ -20,7 +20,7 @@ public class CommandsRepository {
         }
     }
 
-    public static String cat(File directory, ArrayList<String> inputs) throws IOException {
+    public static String cat(File directory, ArrayList<String> inputs) throws IOException , Exception {
         boolean isAppend = false;
         StringBuilder output = new StringBuilder();
         // first we should check if there is ">" or ">>" in the inputs
@@ -60,7 +60,7 @@ public class CommandsRepository {
 
                     } else {
                         output.append("cat: ").append(file2.getName()).append(": No such file or directory");
-                        return output.toString();
+                        throw new Exception(output.toString());
                     }
                         BufferedWriter writer = new BufferedWriter(new java.io.FileWriter(file1, isAppend));
                         writer.write(output.toString());
@@ -82,7 +82,7 @@ public class CommandsRepository {
                         output.append(java.nio.file.Files.readString(file.toPath()));
                     } else {
                         output.append("cat: ").append(file.getName()).append(": No such file or directory\n");
-                        return output.toString();
+                        throw new Exception(output.toString());
                     }
                 }
                 for (int i = index + 2; i < inputs.size(); i++) {
@@ -91,7 +91,7 @@ public class CommandsRepository {
                         output.append(java.nio.file.Files.readString(file.toPath()));
                     } else {
                         output.append("cat: ").append(file.getName()).append(": No such file or directory\n");
-                        return output.toString();
+                        throw new Exception(output.toString());
                     }
                 }
                 BufferedWriter writer = new BufferedWriter(new java.io.FileWriter(file1, isAppend));
@@ -104,46 +104,6 @@ public class CommandsRepository {
         }
 
 
-
-        //case 2: cat > file1 file2 : write to file1 the content of file2
-        //check for '>' then takes the next input and writes it to the file
-        /*if (inputs.contains(">")) {
-            int index = inputs.indexOf(">");
-            File file1 = new File(directory.getCanonicalPath() + "/" + inputs.get(index + 1));
-            file1.createNewFile();
-            File file2 = new File(directory.getCanonicalPath() + "/" + inputs.getLast());
-            if (file2.exists() && !file1.getName().equals(file2.getName())) {
-                BufferedWriter writer = new BufferedWriter(new java.io.FileWriter(file1));
-                writer.write(java.nio.file.Files.readString(file2.toPath()));
-                writer.close();
-            } else if (!file2.exists()) {
-                output.append("cat: ").append(file2.getName()).append(": No such file or directory\n");
-            }
-            // case 3: cat > file1 then takes the next input and writes it to the file
-            else if (index == inputs.size() - 2) {
-                File file = new File(directory.getCanonicalPath() + "/" + inputs.getLast());
-                // if the file exists, take the input from user and write it to the file
-                if (file.exists()) {
-                    BufferedWriter writer = new BufferedWriter(new java.io.FileWriter(file));
-                    Scanner scanner = new Scanner(System.in);
-                    writer.write(scanner.nextLine());
-                    writer.close();
-                } else {
-                    output.append("cat: ").append(inputs.getLast()).append(": No such file or directory\n");
-                }
-
-
-
-            }*/
-
-
-
-
-
-
-
-
-
     }
         //case 3: cat file1 file2 file3 ...
         for (String input : inputs) {
@@ -152,6 +112,7 @@ public class CommandsRepository {
                 output.append(java.nio.file.Files.readString(file.toPath()));
             } else {
                 output.append("cat: ").append(input).append(": No such file or directory\n");
+                throw new Exception(output.toString());
             }
         }
 
