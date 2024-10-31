@@ -14,7 +14,7 @@ class CommandsRepositoryTest {
 
     @Test
     @DisplayName("it succeeds when calling the function")
-    void pwd() throws IOException {
+    void pwdSuccess() throws IOException {
         _commandRepository = new CommandsRepository();
         assertInstanceOf(String.class, _commandRepository.pwd(new File(".")));
     }
