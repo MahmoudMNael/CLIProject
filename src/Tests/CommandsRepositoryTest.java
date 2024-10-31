@@ -26,27 +26,27 @@ class CommandsRepositoryTest {
     @Test
     @DisplayName("mkdir succeeds when given valid inputs")
     void mkdirSuccess() throws Exception {
-        assertDoesNotThrow(() -> _commandRepository.mkdir(new ArrayList<>(Arrays.asList("./testdirectory"))));
+        assertDoesNotThrow(() -> _commandRepository.mkdir(new File("."), new ArrayList<>(Arrays.asList("./testdirectory"))));
     }
 
     @Test
     @DisplayName("mkdir fails when not given any input")
     void mkdirFailureEmptyInput() throws Exception {
-        Exception exception = assertThrows(Exception.class, () -> _commandRepository.mkdir(new ArrayList<>()));
+        Exception exception = assertThrows(Exception.class, () -> _commandRepository.mkdir(new File("."), new ArrayList<>()));
         assertEquals("mkdir: Missing operand!", exception.getMessage());
     }
 
     @Test
     @DisplayName("mkdir fails when given an already existing directory")
     void mkdirFailureExistingDirectory() throws Exception {
-        Exception exception = assertThrows(Exception.class, () -> _commandRepository.mkdir(new ArrayList<>(Arrays.asList("src"))));
+        Exception exception = assertThrows(Exception.class, () -> _commandRepository.mkdir(new File("."), new ArrayList<>(Arrays.asList("src"))));
         assertEquals("mkdir: Directory already exists!", exception.getMessage());
     }
 
     @Test
     @DisplayName("mkdir fails when given a non valid path")
     void mkdirFailureNoDirectory() throws Exception {
-        Exception exception = assertThrows(Exception.class, () -> _commandRepository.mkdir(new ArrayList<>(Arrays.asList("blahblah/testdir"))));
+        Exception exception = assertThrows(Exception.class, () -> _commandRepository.mkdir(new File("."), new ArrayList<>(Arrays.asList("blahblah/testdir"))));
         assertEquals("mkdir: No such file or directory!", exception.getMessage());
     }
 
