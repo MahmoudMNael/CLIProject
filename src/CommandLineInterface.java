@@ -118,11 +118,13 @@ public class CommandLineInterface {
                 _inputStream.removeFirst();
             }
         }
-        if (_output.contains("\n")) {
-            List<String> outputList = Arrays.stream(_output.split("\n")).toList();
-            inputs.addAll(0, outputList);
-        } else {
-            inputs.addFirst(_output);
+        if (isPiped) {
+            if (_output.contains("\n")) {
+                List<String> outputList = Arrays.stream(_output.split("\n")).toList();
+                inputs.addAll(0, outputList);
+            } else {
+                inputs.addFirst(_output);
+            }
         }
     }
 }
