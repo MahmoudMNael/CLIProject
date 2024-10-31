@@ -91,7 +91,7 @@ class CommandsRepositoryTest {
     @DisplayName("mv fails when given file is not found")
     void mvFailureNotFound() throws Exception {
         _commandRepository = new CommandsRepository();
-        Exception exception = assertThrows(Exception.class, () -> _commandRepository.mv(new ArrayList<>(Arrays.asList("MovedFiless","src/MovedFile"))));
+        Exception exception = assertThrows(Exception.class, () -> _commandRepository.mv(new File("."), new ArrayList<>(Arrays.asList("MovedFiless","src/MovedFile"))));
         assertEquals("File or Target path is not found", exception.getMessage());
     }
 
@@ -99,7 +99,7 @@ class CommandsRepositoryTest {
     @DisplayName("mv fails when the given inputs is not enough")
     void mvFailureInputInvalid() throws Exception {
         _commandRepository = new CommandsRepository();
-        Exception exception = assertThrows(Exception.class, () -> _commandRepository.mv(new ArrayList<>(Arrays.asList("MovedFile"))));
+        Exception exception = assertThrows(Exception.class, () -> _commandRepository.mv(new File("."), new ArrayList<>(Arrays.asList("MovedFile"))));
         assertEquals("Input is not valid, Please enter the file name and the path you want to move it to", exception.getMessage());
     }
 

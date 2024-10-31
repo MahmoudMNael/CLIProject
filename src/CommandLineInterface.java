@@ -103,14 +103,18 @@ public class CommandLineInterface {
                         isPiped = false;
                     }
                     break;
+                case "mv":
+                    _inputStream.removeFirst();
+                    extractCommandHelpers(flags, inputs, isPiped);
+                    _commandsRepository.mv(_workingDirectory, inputs);
+                    if (isPiped) {
+                        _output = "";
+                        isPiped = false;
+                    }
+                    break;
                 case "|":
                     _inputStream.removeFirst();
                     isPiped = true;
-                    break;
-                case "mv":
-                    _inputStream.removeFirst();
-                    extractCommandHelpers(flags, inputs);
-                    _commandsRepository.mv(inputs);
                     break;
                 case "exit":
                     exit(0);

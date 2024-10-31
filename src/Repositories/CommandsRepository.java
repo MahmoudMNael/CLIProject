@@ -61,17 +61,33 @@ public class CommandsRepository {
     }
 
 
-    public void mv(ArrayList<String> inputs) throws Exception {
-        if (inputs.size() >= 2) {
+    public void mv(File workingDirectory, ArrayList<String> inputs) throws Exception {
+        if (inputs.size() == 2) {
             String source = inputs.getFirst();
             String target = inputs.getLast();
-            File firstFile = new File(source);
-            File secondFile = new File(target);
+            File testFirstFileIfAbs = new File(source);
+            File firstFile;
+            if (testFirstFileIfAbs.isAbsolute()) {
+                firstFile = new File(source);
+            } else {
+                firstFile = new File(workingDirectory.getCanonicalPath() + "/" + source);
+            }
+            File testSecondFileIfAbs = new File(target);
+            File secondFile;
+            if (testSecondFileIfAbs.isAbsolute()) {
+                secondFile = new File(target);
+            } else {
+                secondFile = new File(workingDirectory.getCanonicalPath() + "/" + target);
+            }
             if (firstFile.exists()){
-                Files.move(firstFile.toPath(), secondFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                try {
+                    Files.move(firstFile.toPath(), secondFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                } catch (Exception e) {
+                    throw new Exception("mv: Invalid target path");
+                }
             }
             else {
-                throw new Exception("File or Target path is not found");
+                throw new Exception("File is not found");
             }
         }
         else {
