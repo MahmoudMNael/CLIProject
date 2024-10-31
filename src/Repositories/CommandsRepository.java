@@ -243,7 +243,7 @@ public class CommandsRepository {
         }
         // To make sure that it doesnot return null
         if (Objects.requireNonNull(removedFile.list()).length > 0){
-            throw new Exception("rmdir: Invalid input!");
+            throw new Exception("rmdir: Directory has children!");
         } else {
             removedFile.delete();
         }
